@@ -204,7 +204,7 @@ export default function ProductsIndex({ products, filterOptions, stats, queryPar
         <AppSidebarLayout breadcrumbs={breadcrumbs}>
             <Head title="Products" />
 
-            <div className="space-y-6 px-6 py-4">
+            <div className="space-y-6">
                 <PageHeader
                     title="Products"
                     description="Manage your product inventory with advanced filtering and search."

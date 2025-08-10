@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Exports\ProductsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\ProductIndexRequest;
+use App\Http\Requests\ProductStoreRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
@@ -258,15 +259,54 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return "create";
+        // Get available categories from existing products
+        $categories = Product::distinct()
+            ->pluck('category')
+            ->filter()
+            ->sort()
+            ->values()
+            ->toArray();
+
+        // Add some common categories if none exist
+        if (empty($categories)) {
+            $categories = [
+                'Electronics',
+                'Clothing',
+                'Books',
+                'Home & Garden',
+                'Sports',
+                'Toys',
+                'Beauty',
+                'Automotive',
+                'Food',
+                'Health'
+            ];
+        }
+
+        $statusOptions = [
+            ['label' => 'Active', 'value' => 'active'],
+            ['label' => 'Inactive', 'value' => 'inactive'],
+            ['label' => 'Pending', 'value' => 'pending'],
+        ];
+
+        return Inertia::render('products/create', [
+            'categories' => $categories,
+            'statusOptions' => $statusOptions,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $product = Product::create($validated);
+
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Product created successfully!');
     }
 
     /**
