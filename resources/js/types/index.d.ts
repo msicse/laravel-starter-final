@@ -59,6 +59,18 @@ export interface Product {
     updated_at: string;
 }
 
+export interface Vehicle {
+    id: number;
+    brand: string;
+    model: string;
+    color: string;
+    registration_number: string;
+    vendor: string | null;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface ActionButton {
     label: string;
     icon: React.ReactNode;

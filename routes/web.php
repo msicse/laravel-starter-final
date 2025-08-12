@@ -3,6 +3,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\VehicleController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -15,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('products', ProductController::class);
     Route::get('products-export', [ProductController::class, 'export'])->name('products.export');
+
+    Route::resource('vehicles', VehicleController::class);
 
 });
 
