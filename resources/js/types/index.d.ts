@@ -41,10 +41,24 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
+    phone?: string;
+    user_type?: string;
+    blood_group?: string;
+    image?: string;
+    avatar?: string; // Keep for backward compatibility
+    status: string;
+    address?: string;
+    whatsapp_id?: string;
+    last_login_at?: string;
+    last_login_ip?: string;
+    last_login_location?: string;
+    last_login_device?: string;
+    last_login_country?: string;
+    last_login_timezone?: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    department_id?: number;
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -69,6 +83,30 @@ export interface Vehicle {
     is_active: boolean;
     created_at: string;
     updated_at: string;
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    permissions?: Permission[];
+    users?: User[];
+    users_count?: number;
+    permissions_count?: number;
+}
+
+export interface Permission {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    roles?: Role[];
+    users?: User[];
+    roles_count?: number;
+    users_count?: number;
 }
 
 export interface ActionButton {

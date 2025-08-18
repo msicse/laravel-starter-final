@@ -11,7 +11,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Car, Folder, LayoutGrid, Menu, Package, Search } from 'lucide-react';
+import { BookOpen, Car, Folder, LayoutGrid, Menu, Package, Search, Users, UserCheck, Shield, Key } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -20,6 +20,26 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Users',
+        href: '/users',
+        icon: Users,
+    },
+    {
+        title: 'Drivers',
+        href: '/drivers',
+        icon: UserCheck,
+    },
+    {
+        title: 'Roles',
+        href: '/roles',
+        icon: Shield,
+    },
+    {
+        title: 'Permissions',
+        href: '/permissions',
+        icon: Key,
     },
     {
         title: 'Products',
