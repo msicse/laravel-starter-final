@@ -4,6 +4,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SharedData } from '@/types';
+import toast, { Toaster } from 'react-hot-toast';
 
 /**
  * Flash Messages Component
@@ -22,6 +23,8 @@ interface FlashMessage {
 export default function FlashMessages() {
   const { flash } = usePage<SharedData>().props;
   const [messages, setMessages] = useState<FlashMessage[]>([]);
+
+
 
   useEffect(() => {
     const newMessages: FlashMessage[] = [];
@@ -119,62 +122,136 @@ export default function FlashMessages() {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-3 max-w-sm">
-      {messages.map((message) => (
-        <div
-          key={message.id}
-          className={cn(
-            'relative rounded-lg border p-4 shadow-lg backdrop-blur-sm',
-            'animate-in slide-in-from-right-full duration-300',
-            'transition-all hover:shadow-xl',
-            getColorClasses(message.type)
-          )}
-        >
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 mt-0.5">
-              {getIcon(message.type)}
+    <>
+
+
+      {/* Laravel Flash Messages */}
+      <div className="fixed top-4 right-4 z-50 space-y-3 max-w-sm">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={cn(
+              'relative rounded-lg border p-4 shadow-lg backdrop-blur-sm',
+              'animate-in slide-in-from-right-full duration-300',
+              'transition-all hover:shadow-xl',
+              getColorClasses(message.type)
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 mt-0.5">
+                {getIcon(message.type)}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium leading-5">
+                  {message.message}
+                </p>
+              </div>
+              <button
+                onClick={() => dismissMessage(message.id)}
+                className={cn(
+                  'flex-shrink-0 ml-2 p-1 rounded-md transition-colors',
+                  'hover:bg-black/10 dark:hover:bg-white/10',
+                  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent'
+                )}
+                aria-label="Dismiss notification"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium leading-5">
-                {message.message}
-              </p>
-            </div>
-            <button
-              onClick={() => dismissMessage(message.id)}
-              className={cn(
-                'flex-shrink-0 ml-2 p-1 rounded-md transition-colors',
-                'hover:bg-black/10 dark:hover:bg-white/10',
-                'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent'
-              )}
-              aria-label="Dismiss notification"
-            >
-              <X className="h-4 w-4" />
-            </button>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+
+      {/* React Hot Toast Container - Simplified for debugging */}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerStyle={{
+          top: '20px',
+          right: '20px',
+          zIndex: 9999,
+        }}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#10b981',
+            color: '#ffffff',
+            borderRadius: '8px',
+            padding: '16px',
+            fontSize: '14px',
+            fontWeight: '500',
+            minWidth: '250px',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+          },
+        }}
+      />
+    </>
   );
 }
 
 // Hook for programmatically showing flash messages
 export function useFlashMessage() {
   const showSuccess = (message: string) => {
-    // This would typically integrate with a toast library
-    // For now, we'll just log it
-    console.log('Success:', message);
+    toast.success(message, {
+      duration: 4000,
+      position: 'top-right',
+      style: {
+        background: '#10b981',
+        color: '#ffffff',
+        borderRadius: '8px',
+        padding: '12px 16px',
+      },
+      iconTheme: {
+        primary: '#ffffff',
+        secondary: '#10b981',
+      },
+    });
   };
 
   const showError = (message: string) => {
-    console.log('Error:', message);
+    toast.error(message, {
+      duration: 5000,
+      position: 'top-right',
+      style: {
+        background: '#ef4444',
+        color: '#ffffff',
+        borderRadius: '8px',
+        padding: '12px 16px',
+      },
+      iconTheme: {
+        primary: '#ffffff',
+        secondary: '#ef4444',
+      },
+    });
   };
 
   const showWarning = (message: string) => {
-    console.log('Warning:', message);
+    toast(message, {
+      duration: 4000,
+      position: 'top-right',
+      icon: '⚠️',
+      style: {
+        background: '#f59e0b',
+        color: '#ffffff',
+        borderRadius: '8px',
+        padding: '12px 16px',
+      },
+    });
   };
 
   const showInfo = (message: string) => {
-    console.log('Info:', message);
+    toast(message, {
+      duration: 4000,
+      position: 'top-right',
+      icon: 'ℹ️',
+      style: {
+        background: '#3b82f6',
+        color: '#ffffff',
+        borderRadius: '8px',
+        padding: '12px 16px',
+      },
+    });
   };
 
   return {

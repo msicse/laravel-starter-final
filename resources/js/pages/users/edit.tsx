@@ -15,10 +15,13 @@ interface EditUserProps {
 
 type UserForm = {
     name: string;
+    username: string;
     email: string;
     password: string;
     password_confirmation: string;
-    phone: string;
+    official_phone: string;
+    personal_phone: string;
+    emergency_phone: string;
     user_type: string;
     blood_group: string;
     image: string;
@@ -26,6 +29,14 @@ type UserForm = {
     address: string;
     whatsapp_id: string;
     department_id: string;
+    // Driver-specific fields
+    driving_license_no: string;
+    nid_number: string;
+    present_address: string;
+    permanent_address: string;
+    emergency_contact_name: string;
+    emergency_contact_phone: string;
+    emergency_contact_relation: string;
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -37,10 +48,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function EditUser({ user, userTypes, bloodGroups, statuses }: EditUserProps) {
     const { data, setData, put, processing, errors } = useForm<UserForm>({
         name: user.name,
-        email: user.email,
+        username: user.username || '',
+        email: user.email || '',
         password: '',
         password_confirmation: '',
-        phone: user.phone || '',
+        official_phone: user.official_phone || '',
+        personal_phone: user.personal_phone || '',
+        emergency_phone: user.emergency_phone || '',
         user_type: user.user_type || '',
         blood_group: user.blood_group || '',
         image: user.image || '',
@@ -48,6 +62,14 @@ export default function EditUser({ user, userTypes, bloodGroups, statuses }: Edi
         address: user.address || '',
         whatsapp_id: user.whatsapp_id || '',
         department_id: user.department_id?.toString() || '',
+        // Driver-specific fields
+        driving_license_no: user.driving_license_no || '',
+        nid_number: user.nid_number || '',
+        present_address: user.present_address || '',
+        permanent_address: user.permanent_address || '',
+        emergency_contact_name: user.emergency_contact_name || '',
+        emergency_contact_phone: user.emergency_contact_phone || '',
+        emergency_contact_relation: user.emergency_contact_relation || '',
     });
 
     const submit = (e: React.FormEvent) => {

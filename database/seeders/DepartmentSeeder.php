@@ -13,7 +13,7 @@ class DepartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        Department::insert([
+        $departments = [
             ["id" => "1", "name" => "Information Technology", "short_name" => "IT", "slug" => "it"],
             ["id" => "2", "name" => "Admin & Support", "short_name" => "ADMIN", "slug" => "admin-and-coordination"],
             ["id" => "3", "name" => "Remediation Programme Department", "short_name" => "RPD", "slug" => "remediation-case-handlers"],
@@ -28,6 +28,13 @@ class DepartmentSeeder extends Seeder
             ["id" => "13", "name" => "Accounts", "short_name" => "Accounts", "slug" => "finance-accounts"],
             ["id" => "14", "name" => "Media and Communications", "short_name" => "MCM", "slug" => "media-and-communications"],
             ["id" => "15", "name" => "Intern", "short_name" => "Intern", "slug" => "intern"]
-        ]);
+        ];
+
+        foreach ($departments as $department) {
+            Department::firstOrCreate(
+                ['id' => $department['id']],
+                $department
+            );
+        }
     }
 }

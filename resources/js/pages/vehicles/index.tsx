@@ -93,9 +93,41 @@ export default function VehiclesIndex({ vehicles, filterOptions, stats, queryPar
             key: 'vendor',
             label: 'Vendor',
             sortable: true,
-            render: (value) => (
-                <span className="text-muted-foreground">{value || 'N/A'}</span>
-            ),
+            render: (value, vehicle) => {
+                // Handle both the vendor object and the legacy vendor string
+                const vendorName = typeof value === 'object' && value?.name
+                    ? value.name
+                    : vehicle.vendor?.name || (typeof value === 'string' ? value : null);
+
+                return (
+                    <span className="text-muted-foreground">
+                        {vendorName || 'N/A'}
+                    </span>
+                );
+            },
+        },
+        {
+            key: 'driver',
+            label: 'Driver',
+            sortable: true,
+            render: (value, vehicle) => {
+                const driver = vehicle.driver;
+
+                if (!driver) {
+                    return (
+                        <span className="text-muted-foreground">N/A</span>
+                    );
+                }
+
+                return (
+                    <div className="flex flex-col">
+                        <span className="font-medium text-sm">{driver.name}</span>
+                        <span className="text-xs text-muted-foreground">
+                            {driver.official_phone || driver.email}
+                        </span>
+                    </div>
+                );
+            },
         },
         {
             key: 'is_active',
@@ -210,7 +242,7 @@ export default function VehiclesIndex({ vehicles, filterOptions, stats, queryPar
             <div className="space-y-6">
                 <PageHeader
                     title="Vehicles"
-                    description="Manage your vehicle fleet with advanced filtering and search."
+                    description="Manage fleet and documentation"
                     actions={[
                         {
                             label: 'Add Vehicle',

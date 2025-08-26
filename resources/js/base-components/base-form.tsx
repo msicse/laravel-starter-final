@@ -181,7 +181,7 @@ export function FormField({
 
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={name} error={!!displayError}>
+      <Label htmlFor={name} className={cn(displayError && "text-destructive")}>
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
@@ -247,14 +247,14 @@ export function FormSelect({
 }: FormSelectProps) {
   return (
     <div className={cn("space-y-2", className)}>
-      <Label htmlFor={name} error={!!error}>
+      <Label htmlFor={name} className={cn(error && "text-destructive")}>
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
 
       <Select
-        value={value.toString()}
-        onValueChange={onChange}
+        value={value.toString() || 'none'}
+        onValueChange={(selectedValue) => onChange(selectedValue === 'none' ? '' : selectedValue)}
         disabled={disabled}
         required={required}
       >
@@ -267,7 +267,10 @@ export function FormSelect({
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value.toString()}>
+            <SelectItem
+              key={option.value}
+              value={option.value.toString() || 'none'}
+            >
               {option.label}
             </SelectItem>
           ))}

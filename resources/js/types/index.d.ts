@@ -40,8 +40,12 @@ export interface SharedData {
 export interface User {
     id: number;
     name: string;
-    email: string;
-    phone?: string;
+    username?: string;
+    email?: string; // Made optional for drivers
+    phone?: string; // Keep for backward compatibility
+    official_phone?: string;
+    personal_phone?: string;
+    emergency_phone?: string;
     user_type?: string;
     blood_group?: string;
     image?: string;
@@ -49,6 +53,14 @@ export interface User {
     status: string;
     address?: string;
     whatsapp_id?: string;
+    // Driver-specific fields
+    driving_license_no?: string;
+    nid_number?: string;
+    present_address?: string;
+    permanent_address?: string;
+    emergency_contact_name?: string;
+    emergency_contact_phone?: string;
+    emergency_contact_relation?: string;
     last_login_at?: string;
     last_login_ip?: string;
     last_login_location?: string;
@@ -73,14 +85,75 @@ export interface Product {
     updated_at: string;
 }
 
+export interface VendorContactPerson {
+    id: number;
+    vendor_id: number;
+    name: string;
+    position: string | null;
+    phone: string | null;
+    email: string | null;
+    is_primary: boolean;
+    notes: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Vendor {
+    id: number;
+    name: string;
+    address: string | null;
+    phone: string | null;
+    email: string | null;
+    website: string | null;
+    description: string | null;
+    status: 'active' | 'inactive';
+    created_at: string;
+    updated_at: string;
+    contact_persons?: VendorContactPerson[];
+    vehicles?: Vehicle[];
+    vehicles_count?: number;
+}
+
 export interface Vehicle {
     id: number;
     brand: string;
     model: string;
-    color: string;
+    color: string | null; // Made optional
     registration_number: string;
-    vendor: string | null;
+    vendor: string | null; // Keep for backward compatibility
+    vendor_id: number | null;
+    vendor?: Vendor;
+    driver_id: number;
+    driver?: User;
     is_active: boolean;
+    // Tax Token
+    tax_token_last_date: string | null;
+    tax_token_number: string | null;
+    // Fitness Certificate
+    fitness_certificate_last_date: string | null;
+    fitness_certificate_number: string | null;
+    // Insurance
+    insurance_type: '1st_party' | '3rd_party' | 'comprehensive' | null;
+    insurance_last_date: string | null;
+    insurance_policy_number: string | null;
+    insurance_company: string | null;
+    // Registration Certificate & Owner Info
+    registration_certificate_number: string | null;
+    owner_name: string | null;
+    owner_address: string | null;
+    owner_phone: string | null;
+    owner_email: string | null;
+    owner_nid: string | null;
+    // Additional Vehicle Info
+    manufacture_year: number | null;
+    engine_number: string | null;
+    chassis_number: string | null;
+    fuel_type: 'petrol' | 'diesel' | 'cng' | 'electric' | 'hybrid' | null;
+    // Alert Settings
+    tax_token_alert_enabled: boolean;
+    fitness_alert_enabled: boolean;
+    insurance_alert_enabled: boolean;
+    alert_days_before: number;
     created_at: string;
     updated_at: string;
 }

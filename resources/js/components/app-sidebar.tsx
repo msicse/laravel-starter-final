@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Car, Folder, LayoutGrid, Package, Users, UserCheck, Shield, Key } from 'lucide-react';
+import { BookOpen, Building2, Car, Folder, LayoutGrid, Package, Users, UserCheck, Shield, Key } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -42,6 +42,11 @@ const mainNavItems: NavItem[] = [
         title: 'Vehicles',
         href: '/vehicles',
         icon: Car,
+    },
+    {
+        title: 'Vendors',
+        href: '/vendors',
+        icon: Building2,
     },
 ];
 

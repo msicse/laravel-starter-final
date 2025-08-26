@@ -20,9 +20,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
-        'phone',
+        'official_phone',
+        'personal_phone',
+        'emergency_phone',
         'user_type',
         'blood_group',
         'image',
@@ -33,6 +36,14 @@ class User extends Authenticatable
         'last_login_ip',
         'last_login_location',
         'last_login_device',
+        // Driver-specific fields
+        'driving_license_no',
+        'nid_number',
+        'present_address',
+        'permanent_address',
+        'emergency_contact_name',
+        'emergency_contact_phone',
+        'emergency_contact_relation',
         'last_login_country',
         'last_login_timezone',
         'department_id',
@@ -59,5 +70,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the identifier that will be used for authentication.
+     * This method helps determine if the login input is email or username.
+     */
+    public static function getLoginField(string $login): string
+    {
+        return filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    }
+
+    /**
+     * Find user by login (email or username).
+     */
+    public static function findByLogin(string $login): ?User
+    {
+        $field = self::getLoginField($login);
+        return self::where($field, $login)->first();
     }
 }

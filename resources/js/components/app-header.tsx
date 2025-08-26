@@ -11,7 +11,7 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Car, Folder, LayoutGrid, Menu, Package, Search, Users, UserCheck, Shield, Key } from 'lucide-react';
+import { BookOpen, Building2, Car, Folder, LayoutGrid, Menu, Package, Search, Users, UserCheck, Shield, Key } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
@@ -50,6 +50,11 @@ const mainNavItems: NavItem[] = [
         title: 'Vehicles',
         href: '/vehicles',
         icon: Car,
+    },
+    {
+        title: 'Vendors',
+        href: '/vendors',
+        icon: Building2,
     },
 ];
 

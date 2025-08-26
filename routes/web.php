@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VendorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\RoleController;
@@ -22,6 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('products-export', [ProductController::class, 'export'])->name('products.export');
 
     Route::resource('vehicles', VehicleController::class);
+    Route::get('vehicles-expiring', [VehicleController::class, 'getExpiringVehicles'])->name('vehicles.expiring');
+
+    Route::resource('vendors', VendorController::class);
+    Route::get('vendors-select', [VendorController::class, 'getVendorsForSelect'])->name('vendors.select');
 
     Route::resource('users', UserController::class);
 

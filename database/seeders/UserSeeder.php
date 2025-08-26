@@ -19,8 +19,9 @@ class UserSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'System Administrator',
+                'username' => 'admin',
                 'password' => Hash::make('12345678'),
-                'phone' => '+1234567890',
+                'official_phone' => '+1234567890',
                 'user_type' => 'admin',
                 'blood_group' => 'O+',
                 'status' => 'active',
@@ -58,13 +59,14 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($drivers as $driver) {
+        foreach ($drivers as $index => $driver) {
             User::firstOrCreate(
                 ['email' => $driver['email']],
                 [
                     'name' => $driver['name'],
+                    'username' => 'driver' . ($index + 1),
                     'password' => Hash::make('12345678'),
-                    'phone' => $driver['phone'],
+                    'official_phone' => $driver['phone'],
                     'user_type' => 'driver',
                     'blood_group' => $driver['blood_group'],
                     'status' => 'active',
@@ -95,13 +97,14 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($managers as $manager) {
+        foreach ($managers as $index => $manager) {
             User::firstOrCreate(
                 ['email' => $manager['email']],
                 [
                     'name' => $manager['name'],
+                    'username' => 'manager' . ($index + 1),
                     'password' => Hash::make('12345678'),
-                    'phone' => $manager['phone'],
+                    'official_phone' => $manager['phone'],
                     'user_type' => 'manager',
                     'blood_group' => $manager['blood_group'],
                     'status' => 'active',
@@ -137,13 +140,14 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($employees as $employee) {
+        foreach ($employees as $index => $employee) {
             User::firstOrCreate(
                 ['email' => $employee['email']],
                 [
                     'name' => $employee['name'],
+                    'username' => 'employee' . ($index + 1),
                     'password' => Hash::make('12345678'),
-                    'phone' => $employee['phone'],
+                    'official_phone' => $employee['phone'],
                     'user_type' => 'employee',
                     'blood_group' => $employee['blood_group'],
                     'status' => $employee['status'],

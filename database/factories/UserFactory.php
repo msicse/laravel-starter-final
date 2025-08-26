@@ -23,13 +23,37 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        return [
+        $userType = fake()->randomElement(['admin', 'manager', 'employee', 'driver']);
+
+        $data = [
             'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
             'email' => fake()->unique()->safeEmail(),
+            'official_phone' => fake()->phoneNumber(),
+            'personal_phone' => fake()->optional()->phoneNumber(),
+            'emergency_phone' => fake()->optional()->phoneNumber(),
+            'user_type' => $userType,
+            'blood_group' => fake()->randomElement(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
+            'status' => fake()->randomElement(['active', 'inactive', 'suspended']),
+            'address' => fake()->optional()->address(),
+            'whatsapp_id' => fake()->optional()->phoneNumber(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+
+        // Add driver-specific fields if user is a driver
+        if ($userType === 'driver') {
+            $data['driving_license_no'] = 'DL-' . fake()->unique()->numerify('########');
+            $data['nid_number'] = fake()->unique()->numerify('#############');
+            $data['present_address'] = fake()->address();
+            $data['permanent_address'] = fake()->address();
+            $data['emergency_contact_name'] = fake()->name();
+            $data['emergency_contact_phone'] = fake()->phoneNumber();
+            $data['emergency_contact_relation'] = fake()->randomElement(['Father', 'Mother', 'Spouse', 'Brother', 'Sister', 'Friend']);
+        }
+
+        return $data;
     }
 
     /**

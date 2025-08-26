@@ -10,31 +10,31 @@ import { LoaderCircle } from "lucide-react"
 
 /**
  * Advanced Form Components with React Hook Form integration
- * 
+ *
  * This provides an alternative to the base form components when you need:
  * - More complex validation logic
  * - Better performance with large forms
  * - Schema-based validation (Zod, Yup, etc.)
  * - Advanced form features like field arrays, conditional fields
- * 
+ *
  * Note: Requires react-hook-form to be installed
  * npm install react-hook-form @hookform/resolvers
- * 
+ *
  * @example
  * import { useForm } from 'react-hook-form'
  * import { zodResolver } from '@hookform/resolvers/zod'
  * import * as z from 'zod'
- * 
+ *
  * const schema = z.object({
  *   name: z.string().min(1, 'Name is required'),
  *   email: z.string().email('Invalid email'),
  * })
- * 
+ *
  * const form = useForm({
  *   resolver: zodResolver(schema),
  *   defaultValues: { name: '', email: '' }
  * })
- * 
+ *
  * <AdvancedForm form={form} onSubmit={handleSubmit}>
  *   <AdvancedFormField
  *     form={form}
@@ -57,13 +57,13 @@ interface AdvancedFormProps extends Omit<React.FormHTMLAttributes<HTMLFormElemen
   className?: string
 }
 
-export function AdvancedForm({ 
-  form, 
-  onSubmit, 
-  children, 
-  processing = false, 
+export function AdvancedForm({
+  form,
+  onSubmit,
+  children,
+  processing = false,
   className,
-  ...props 
+  ...props
 }: AdvancedFormProps) {
   const handleSubmit = form.handleSubmit(async (data: any) => {
     try {
@@ -74,8 +74,8 @@ export function AdvancedForm({
   })
 
   return (
-    <form 
-      className={cn("space-y-6", className)} 
+    <form
+      className={cn("space-y-6", className)}
       onSubmit={handleSubmit}
       {...props}
     >
@@ -108,20 +108,20 @@ export function AdvancedFormField({
 }: AdvancedFormFieldProps) {
   // This would use Controller from react-hook-form
   // For now, we'll provide a placeholder implementation
-  
+
   return (
     <div className={cn("space-y-2", className)}>
       <Label htmlFor={name}>
         {label}
         {required && <span className="text-destructive ml-1">*</span>}
       </Label>
-      
+
       <div className="text-sm text-muted-foreground">
         This component requires react-hook-form to be installed.
         <br />
         Run: npm install react-hook-form @hookform/resolvers
       </div>
-      
+
       {description && (
         <p className="text-sm text-muted-foreground">
           {description}
@@ -136,7 +136,7 @@ export const validationSchemas = {
   // Example Zod schemas
   user: `
     import * as z from 'zod'
-    
+
     const userSchema = z.object({
       name: z.string()
         .min(1, 'Name is required')
@@ -151,11 +151,11 @@ export const validationSchemas = {
       notifications: z.boolean().default(false),
     })
   `,
-  
+
   // Example Yup schemas
   userYup: `
     import * as yup from 'yup'
-    
+
     const userSchema = yup.object({
       name: yup.string()
         .required('Name is required')
@@ -183,18 +183,18 @@ export function useInertiaForm<T extends Record<string, any>>(
   }
 ) {
   const [processing, setProcessing] = React.useState(false)
-  
+
   const submit = async (data: T) => {
     setProcessing(true)
-    
+
     try {
       // This would integrate with Inertia.js router
       // For now, we'll provide a placeholder
       console.log('Would submit to:', route, data)
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
-      
+
       options?.onSuccess?.()
     } catch (error) {
       console.error('Submission error:', error)
@@ -203,7 +203,7 @@ export function useInertiaForm<T extends Record<string, any>>(
       setProcessing(false)
     }
   }
-  
+
   return { submit, processing }
 }
 
@@ -226,18 +226,18 @@ interface FormBuilderProps {
   className?: string
 }
 
-export function FormBuilder({ 
-  fields, 
-  onSubmit, 
-  processing = false, 
-  className 
+export function FormBuilder({
+  fields,
+  onSubmit,
+  processing = false,
+  className
 }: FormBuilderProps) {
   const [formData, setFormData] = React.useState<Record<string, any>>({})
   const [errors, setErrors] = React.useState<Record<string, string>>({})
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     // Basic validation
     const newErrors: Record<string, string> = {}
     fields.forEach(field => {
@@ -245,23 +245,23 @@ export function FormBuilder({
         newErrors[field.name] = `${field.label} is required`
       }
     })
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
-    
+
     setErrors({})
     onSubmit(formData)
   }
-  
+
   const updateField = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }))
     }
   }
-  
+
   return (
     <form className={cn("space-y-6", className)} onSubmit={handleSubmit}>
       <fieldset disabled={processing} className="space-y-6">
@@ -271,7 +271,7 @@ export function FormBuilder({
               {field.label}
               {field.required && <span className="text-destructive ml-1">*</span>}
             </Label>
-            
+
             {field.type === 'text' || field.type === 'email' || field.type === 'password' ? (
               <Input
                 id={field.name}
@@ -282,16 +282,16 @@ export function FormBuilder({
                 aria-invalid={!!errors[field.name]}
               />
             ) : field.type === 'select' ? (
-              <Select 
-                value={formData[field.name] || ''} 
-                onValueChange={(value) => updateField(field.name, value)}
+              <Select
+                value={formData[field.name] || 'none'}
+                onValueChange={(value) => updateField(field.name, value === 'none' ? null : value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder={field.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
                   {field.options?.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value || 'none'}>
                       {option.label}
                     </SelectItem>
                   ))}
@@ -318,17 +318,17 @@ export function FormBuilder({
                 </Label>
               </div>
             ) : null}
-            
+
             {field.description && (
               <p className="text-sm text-muted-foreground">
                 {field.description}
               </p>
             )}
-            
+
             <InputError message={errors[field.name]} />
           </div>
         ))}
-        
+
         <div className="flex justify-end pt-4">
           <Button type="submit" disabled={processing}>
             {processing && <LoaderCircle className="h-4 w-4 animate-spin mr-2" />}
