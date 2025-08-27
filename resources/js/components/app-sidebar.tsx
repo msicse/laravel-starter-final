@@ -14,6 +14,16 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
+        title: 'Permissions',
+        href: '/permissions',
+        icon: Key,
+    },
+    {
+        title: 'Roles',
+        href: '/roles',
+        icon: Shield,
+    },
+    {
         title: 'Users',
         href: '/users',
         icon: Users,
@@ -23,31 +33,24 @@ const mainNavItems: NavItem[] = [
         href: '/drivers',
         icon: UserCheck,
     },
+
+
+    // {
+    //     title: 'Products',
+    //     href: '/products',
+    //     icon: Package,
+    // },
     {
-        title: 'Roles',
-        href: '/roles',
-        icon: Shield,
-    },
-    {
-        title: 'Permissions',
-        href: '/permissions',
-        icon: Key,
-    },
-    {
-        title: 'Products',
-        href: '/products',
-        icon: Package,
+        title: 'Vendors',
+        href: '/vendors',
+        icon: Building2,
     },
     {
         title: 'Vehicles',
         href: '/vehicles',
         icon: Car,
     },
-    {
-        title: 'Vendors',
-        href: '/vendors',
-        icon: Building2,
-    },
+
 ];
 
 const footerNavItems: NavItem[] = [

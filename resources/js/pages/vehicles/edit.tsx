@@ -568,7 +568,6 @@ export default function EditVehicle({ vehicle, vendors, drivers = [] }: EditVehi
                                 Update Vehicle
                             </Button>
                         </div>
-                        </div>
                     </BaseForm>
                 </div>
             </div>
