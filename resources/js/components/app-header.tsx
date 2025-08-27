@@ -13,7 +13,6 @@ import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Building2, Car, Folder, LayoutGrid, Menu, Package, Search, Users, UserCheck, Shield, Key } from 'lucide-react';
 import AppLogo from './app-logo';
-import AppLogoIcon from './app-logo-icon';
 
 const mainNavItems: NavItem[] = [
     {
@@ -95,8 +94,29 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                             </SheetTrigger>
                             <SheetContent side="left" className="flex h-full w-64 flex-col items-stretch justify-between bg-sidebar">
                                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                                <SheetHeader className="flex justify-start text-left">
-                                    <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
+                                <SheetHeader className="flex justify-start text-left p-4">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="flex size-8 items-center justify-center rounded-lg bg-white shadow-sm border border-gray-200 dark:border-gray-600 dark:bg-gray-800 overflow-hidden">
+                                            <img
+                                                src="/images/rsc.png"
+                                                alt="RSC Logo"
+                                                className="size-6 object-contain p-0.5"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.style.display = 'none';
+                                                    const fallback = target.parentElement?.querySelector('.logo-fallback') as HTMLElement;
+                                                    if (fallback) fallback.style.display = 'flex';
+                                                }}
+                                            />
+                                            <div className="logo-fallback size-6 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-md flex items-center justify-center" style={{ display: 'none' }}>
+                                                <span className="text-white font-bold text-xs">RSC</span>
+                                            </div>
+                                        </div>
+                                        <div className="grid text-left text-sm leading-tight">
+                                            <span className="font-semibold text-sidebar-foreground">RSC Vehicle Management</span>
+                                            <span className="text-xs text-sidebar-foreground/70">Fleet Solutions</span>
+                                        </div>
+                                    </div>
                                 </SheetHeader>
                                 <div className="flex h-full flex-1 flex-col space-y-4 p-4">
                                     <div className="flex h-full flex-col justify-between text-sm">
