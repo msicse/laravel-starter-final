@@ -226,8 +226,8 @@ export default function Dashboard() {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-                        <p className="text-gray-600 dark:text-gray-400">RSC Vehicle Management System Overview</p>
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Status At A Glance</h1>
+                        {/*<p className="text-gray-600 dark:text-gray-400"></p>*/}
                     </div>
                     <div className="flex items-center space-x-4">
                         <Badge variant="outline" className="text-green-600 border-green-600">

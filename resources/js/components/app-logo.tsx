@@ -23,7 +23,7 @@ export default function AppLogo() {
                     Vehicle Management
                 </span>
                 <span className="truncate text-xs text-sidebar-foreground/70">
-                    Professional Fleet Solutions
+                    {/*Professional Fleet Solutions*/}
                 </span>
             </div>
         </>
